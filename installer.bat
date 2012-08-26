@@ -34,10 +34,12 @@ mkdir %TMP%
 REM download Perl files to temp directory
 echo 	Downloading %ADDON% binaries to temp directory...
 wget.exe -nd -q -P %TMP% %PERL_DOWNLOAD%
+if not %ERRORLEVEL%==0 (echo FAIL: could not download %ADDON% binaries& pause& exit 1)
 
 REM install the binary files in the WampServer install directory
 echo 	Installing %ADDON% to the WampServer install directory...
 msiexec /i %TMP%\%PERL_FILE% /passive TARGETDIR=%PERL_BIN%
+if not %ERRORLEVEL%==0 (echo FAIL: could not install %ADDON% binaries& pause& exit 1)
 
 REM add the Perl bin directory to the PATH so apache can find them
 echo 	Setting enviorment variables...
